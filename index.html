@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tattolia — тату-мастер | Портфолио</title>
+  <meta name="description" content="Tattolia — авторские татуировки. Портфолио работ, запись на сеанс в Telegram." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href=".vscode/css/style.css" />
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+  <!-- Татуировочные узоры: рисуются скриптом (js/script.js) -->
+  <div class="tattoo-bg" id="tattooBg" aria-hidden="true"></div>
+
+  <header class="header" id="header">
+    <a href="#top" class="logo">Tattolia</a>
+    <nav class="nav" id="nav">
+      <a href="#portfolio">Работы</a>
+      <a href="#about">Обо мне</a>
+      <a href="#process">Как проходит сеанс</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a href="#" class="btn btn-small js-tg-account">Записаться</a>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span></button>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text reveal">
+        <p class="eyebrow">татуировки · авторские эскизы</p>
+        <h1><span class="metal">Tattolia</span></h1>
+        <p class="lead">Индивидуальные татуировки, которые подчёркивают вас. Рисую эскиз под вашу идею и тело.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn js-tg-account">Написать в Telegram</a>
+          <a href="#portfolio" class="btn btn-ghost">Смотреть работы</a>
+        </div>
+        <ul class="stats">
+          <li><b data-count="4">0</b><span>года опыта</span></li>
+          <li><b data-count="100">0</b><span>% стерильность</span></li>
+        </ul>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="orb"></div>
+        <div class="ring"></div>
+        <div class="hero-card">
+          <span>Tattolia</span>
+          <small>tattoo artist</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>euro trash</span><span>•</span><span>greywash</span><span>•</span><span>freehand</span><span>•</span><span>whipshading</span><span>•</span><span>•</span><span>outline</span><span>•</span>
+        <span>euro trash</span><span>•</span><span>greywash</span><span>•</span><span>freehand</span><span>•</span><span>whipshading</span><span>•</span><span>•</span><span>outline</span><span>•</span>
+      </div>
+    </div>
+
+    <!-- PORTFOLIO -->
+    <section class="section" id="portfolio">
+      <div class="section-head reveal">
+        <p class="eyebrow">портфолио</p>
+        <h2>Мои <span class="metal">работы</span></h2>
+      </div>
+      <div class="filters reveal" id="filters"></div>
+      <div class="gallery" id="gallery"></div>
+      <p class="hint reveal">Больше работ — в Instagram и Telegram-канале ↓</p>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section about" id="about">
+      <div class="about-photo reveal">
+        <div class="photo-frame">
+          <img src="images/master.jpg" alt="Мастер Tattolia" onerror="this.style.display='none'" />
+          <span class="photo-ph">Ваше фото</span>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <p class="eyebrow">обо мне</p>
+        <h2>Привет, я <span class="metal">Tattolia</span></h2>
+        <p>Я тату-мастер, и для меня татуировка — это не просто рисунок, а история, которая остаётся с вами навсегда. Работаю в стилях euro trash, готика, freehand и ornamental.</p>
+        <p>Каждый эскиз создаётся индивидуально: мы обсуждаем идею, размер и место, а я предлагаю композицию, которая будет красиво смотреться на вашем теле и спустя годы.</p>
+        <ul class="ticks">
+          <li>Индивидуальные эскизы</li>
+          <li>Одноразовые расходники и стерильность</li>
+          <li>Бесплатная консультация</li>
+          <li>Помощь с уходом после сеанса</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section" id="process">
+      <div class="section-head reveal">
+        <p class="eyebrow">этапы</p>
+        <h2>Как проходит <span class="metal">сеанс</span></h2>
+      </div>
+      <div class="steps">
+        <article class="step reveal"><i>01</i><h3>Заявка</h3><p>Пишете мне в Telegram: идея, размер, место на теле, референсы.</p></article>
+        <article class="step reveal"><i>02</i><h3>Эскиз</h3><p>Рисую индивидуальный эскиз и согласовываю с вами все детали.</p></article>
+        <article class="step reveal"><i>03</i><h3>Сеанс</h3><p>Комфортная атмосфера, стерильные материалы, никакой спешки.</p></article>
+        <article class="step reveal"><i>04</i><h3>Уход</h3><p>Даю подробные рекомендации, чтобы татуировка заживала идеально.</p></article>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq" id="faq">
+      <div class="section-head reveal">
+        <p class="eyebrow">вопросы</p>
+        <h2>Частые <span class="metal">вопросы</span></h2>
+      </div>
+      <div class="faq-list">
+        <details class="reveal"><summary>Сколько стоит татуировка?</summary><p>Цена зависит от размера, сложности и места. Точную стоимость назову после обсуждения эскиза — напишите мне в Telegram.</p></details>
+        <details class="reveal"><summary>Больно ли делать тату?</summary><p>Ощущения индивидуальны и зависят от зоны. Мы подберём комфортный темп, а перерывы можно делать в любой момент.</p></details>
+        <details class="reveal"><summary>Можно ли принести свой эскиз?</summary><p>Да! Могу доработать вашу идею или нарисовать с нуля по референсам.</p></details>
+        <details class="reveal"><summary>Как подготовиться к сеансу?</summary><p>Выспитесь, поешьте, не употребляйте алкоголь за сутки до сеанса. Остальное подскажу при записи.</p></details>
+      </div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section class="section contacts" id="contacts">
+      <div class="contact-card reveal">
+        <p class="eyebrow">запись открыта</p>
+        <h2>Готовы к своей <span class="metal">татуировке?</span></h2>
+        <p class="lead">Напишите мне в Telegram — расскажите идею, и я предложу варианты.</p>
+        <div class="contact-buttons">
+          <a href="#" class="btn js-tg-account" target="_blank" rel="noopener">✈ Написать в Telegram</a>
+          <a href="#" class="btn btn-ghost js-tg-channel" target="_blank" rel="noopener">Telegram-канал</a>
+          <a href="#" class="btn btn-ghost js-instagram" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="logo">Tattolia</span>
+    <p>© <span id="year"></span> Tattolia. Все права защищены.</p>
+    <div class="footer-links">
+      <a href="#" class="js-instagram" target="_blank" rel="noopener">Instagram</a>
+      <a href="#" class="js-tg-channel" target="_blank" rel="noopener">Telegram-канал</a>
+      <a href="#" class="js-tg-account" target="_blank" rel="noopener">Telegram</a>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-close" id="lbClose" aria-label="Закрыть">×</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Назад">‹</button>
+    <div class="lb-body" id="lbBody"></div>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Вперёд">›</button>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
