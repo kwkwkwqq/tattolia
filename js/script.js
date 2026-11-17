@@ -155,28 +155,20 @@ const cio = new IntersectionObserver((entries) => {
 counters.forEach((c) => cio.observe(c));
 
 
-/* ============================================================
-   ТАТУ-УЗОРЫ НА ФОНЕ (вырисовываются при загрузке страницы)
-   Слева — колючая лоза с шипами и завитками, справа — колючая
-   проволока с крестами-подвесками, плюс искры (euro trash),
-   на широких экранах — барочные завитки. Линии прерывистые,
-   как на винтажном флеше.
-   ============================================================ */
 (function tattooBackground() {
   const layer = document.getElementById("tattooBg");
   if (!layer) return;
 
   const NS = "http://www.w3.org/2000/svg";
   const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const MS_PER_PX = 4;      // скорость «рисования»: больше число — медленнее
-  const START_DELAY = 500;  // пауза перед началом, мс
+  const MS_PER_PX = 4; 
+  const START_DELAY = 500;
   const TAU = Math.PI * 2;
 
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const dist = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
   const f = (p) => p[0].toFixed(1) + " " + p[1].toFixed(1);
 
-  // Детерминированный рандом: узор всегда одинаковый
   function rng(seed) {
     return function () {
       seed |= 0; seed = (seed + 0x6d2b79f5) | 0;
@@ -193,7 +185,6 @@ counters.forEach((c) => cio.observe(c));
     return e;
   }
 
-  // SVG-«окно», координаты внутри равны координатам экрана
   function makeSvg(x, y, w, h) {
     const s = svgEl("svg", { viewBox: x + " " + y + " " + w + " " + h, width: w, height: h });
     s.style.cssText = "left:" + x + "px;top:" + y + "px;overflow:visible";
@@ -201,7 +192,6 @@ counters.forEach((c) => cio.observe(c));
     return s;
   }
 
-  // Плавная кривая через точки
   function smooth(pts) {
     if (pts.length < 3) return "M" + pts.map(f).join("L");
     let d = "M" + f(pts[0]);
@@ -212,7 +202,6 @@ counters.forEach((c) => cio.observe(c));
     return d + "L" + f(pts[pts.length - 1]);
   }
 
-  // Рисуем линию и (если нужно) анимируем «вырисовывание»
   function draw(svg, d, cls, delay, animate) {
     const p = svgEl("path", { d: d, class: "ink " + (cls || "") }, svg);
     if (animate) {
@@ -237,7 +226,6 @@ counters.forEach((c) => cio.observe(c));
     fadeIn(c, delay, animate);
   }
 
-  // Режем линию на куски с разрывами — винтажная прерывистая линия
   function breakLine(pts, r, minLen, maxLen, gap) {
     const chunks = [];
     let i = 0, total = 0;
@@ -260,9 +248,7 @@ counters.forEach((c) => cio.observe(c));
     return chunks;
   }
 
-  /* ---------- Мотивы ---------- */
 
-  // Колючая лоза: стебель, шипы, завитки, точки
   function vine(svg, o, r, animate) {
     const x = o.x, amp = o.amp, y0 = o.y0, y1 = o.y1, delay = o.delay, sf = o.sf;
     const lam = 230 + r() * 40, ph = r() * TAU;
@@ -277,12 +263,10 @@ counters.forEach((c) => cio.observe(c));
     for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + dist(pts[i - 1], pts[i]));
     const total = cum[cum.length - 1];
 
-    // основной стебель + тонкая параллельная линия
     breakLine(pts, r, 150, 300, 9).forEach((c) => draw(svg, smooth(c.pts), "bold", delay + c.start * MS_PER_PX, animate));
     const pts2 = pts.map((p) => [p[0] + 4.5 * sf, p[1]]);
     breakLine(pts2, r, 90, 220, 12).forEach((c) => draw(svg, smooth(c.pts), "thin", delay + 150 + c.start * MS_PER_PX, animate));
 
-    // шипы и завитки вдоль стебля
     let next = 40 + r() * 30, side = 1, n = 0;
     for (let i = 2; i < pts.length - 2; i++) {
       if (cum[i] < next) continue;
@@ -296,7 +280,6 @@ counters.forEach((c) => cio.observe(c));
       n++;
 
       if (n % 3 === 0) {
-        // завиток (спираль)
         const R = (11 + r() * 13) * sf, turns = 1.5 + r() * 0.7;
         const c = [P[0] + nx * R, P[1] + ny * R];
         const a0 = Math.atan2(P[1] - c[1], P[0] - c[0]);
@@ -309,7 +292,6 @@ counters.forEach((c) => cio.observe(c));
         const e = sp[sp.length - 1];
         dot(svg, e[0], e[1], 1.5, d0 + R * turns * 60, animate);
       } else {
-        // шип-крючок
         const L = (14 + r() * 14) * sf;
         const T = [P[0] + nx * L + tx * L * 0.7, P[1] + ny * L + ty * L * 0.7];
         const c1 = [P[0] + nx * L * 0.95, P[1] + ny * L * 0.95];
@@ -320,7 +302,6 @@ counters.forEach((c) => cio.observe(c));
       side = -side;
     }
 
-    // «набивка» точками рядом с лозой
     const count = Math.round(total / 24);
     for (let k = 0; k < count; k++) {
       const i = Math.floor(r() * pts.length);
@@ -330,7 +311,6 @@ counters.forEach((c) => cio.observe(c));
     }
   }
 
-  // Колючая проволока (две скрученные нити + колючки-крестики)
   function barbed(svg, o, r, animate) {
     const x = o.x, amp = o.amp, lam = o.lam, y0 = o.y0, y1 = o.y1, delay = o.delay, sf = o.sf;
     const A = [], B = [];
@@ -351,7 +331,6 @@ counters.forEach((c) => cio.observe(c));
     }
   }
 
-  // Готический крест с заострёнными концами
   function crossPath(cx, cy, s) {
     const w = s * 0.13, a = s * 0.62, top = s, bot = s * 1.75, ay = -s * 0.38;
     const p = [
@@ -367,7 +346,6 @@ counters.forEach((c) => cio.observe(c));
     dot(svg, cx, cy - s * 0.38, 1.6, delay + 500, animate);
   }
 
-  // Вогнутая «искра» (классика euro trash)
   function starPath(cx, cy, rad, squash) {
     const c = rad * 0.16, sx = rad * squash;
     return (
@@ -390,7 +368,6 @@ counters.forEach((c) => cio.observe(c));
     }
   }
 
-  // Барочный S-завиток: две спирали, сросшиеся в «S»
   function sScroll(svg, o, r, animate) {
     const cx = o.cx, cy = o.cy, R = o.R, turns = o.turns, rot = o.rot, mirror = o.mirror, delay = o.delay;
     const U = turns * TAU, r0 = R * 0.07, R2 = R * 0.78, U2 = turns * 0.8 * TAU;
@@ -416,7 +393,6 @@ counters.forEach((c) => cio.observe(c));
     dot(svg, e[0], e[1], 2.2, delay + U * R * MS_PER_PX * 1.6, animate);
   }
 
-  /* ---------- Сборка композиции ---------- */
   let lastW = innerWidth;
 
   function build(animate) {
@@ -430,12 +406,10 @@ counters.forEach((c) => cio.observe(c));
     const A = animate && !REDUCE;
     const base = START_DELAY;
 
-    // слева — колючая лоза
     const left = makeSvg(-10, 0, colW, H);
     vine(left, { x: amp + 14, amp: amp, y0: -10, y1: H, delay: base, sf: sf }, r, A);
     stars(left, amp * 2 + 22, colW - 18, mobile ? 3 : 5, VH, r, sf, base + 300, A);
 
-    // справа — колючая проволока и кресты-подвески
     const wx = W - (amp * 0.4 + 22);
     const right = makeSvg(W - colW + 10, 0, colW, H);
     barbed(right, { x: wx, amp: clamp(W * 0.007, 4, 9), lam: 64 * sf, y0: -10, y1: H, delay: base + 300, sf: sf }, r, A);
@@ -453,7 +427,6 @@ counters.forEach((c) => cio.observe(c));
       cross(right, cx, cy, s, dl + 200, A);
     });
 
-    // на широких экранах — барочные завитки в углах
     if (W >= 1100) {
       const tr = makeSvg(W - 330, 60, 300, 200);
       sScroll(tr, { cx: W - 150, cy: 150, R: 30, turns: 2.4, rot: -0.3, mirror: 1, delay: base + 1200 }, r, A);
@@ -463,9 +436,6 @@ counters.forEach((c) => cio.observe(c));
   }
 
   build(true);
-
-  // При смене ширины (поворот телефона) перерисовываем без анимации.
-  // Изменение высоты (адресная строка на мобильных) игнорируем.
   let timer;
   addEventListener("resize", () => {
     clearTimeout(timer);
